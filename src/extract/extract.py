@@ -1,8 +1,22 @@
 import requests
+import pandas as pd
 
-# replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
 url = 'https://pokeapi.co/api/v2/pokemon/'
 r = requests.get(url)
 data = r.json()
 
-print(data)
+pokemons = []
+
+for pokemon in data["results"]:
+    response = requests.get(pokemon["url"])
+    details = response.json()
+
+    pokemons.append({
+        "id": details["id"],
+        "name": details["name"],
+        "base_xp": details["base_experience"],
+        "Weight": details["weight"] 
+    })
+
+df = pd.DataFrame(pokemons)
+print (df)
