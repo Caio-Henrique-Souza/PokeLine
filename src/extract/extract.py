@@ -47,3 +47,37 @@ def extrair_detalhes_pokemons():
         json.dump(detalhes, f, indent=4)
 
     print(f"Sucesso! Detalhes salvos em {caminho_arquivo}")
+
+import json
+import os
+import requests
+
+def extrair_species_pokemons():
+    origem = "data/raw/pokemons_detalhes_raw.json"
+    destino = "data/raw"
+    
+    os.makedirs(destino, exist_ok=True)
+
+    with open(origem, 'r') as f:
+        dados = json.load(f)
+
+    species_detalhes = []
+
+    for pokemon in dados:
+        url = pokemon["species"]["url"]
+        
+        resposta = requests.get(url)
+        
+        if resposta.status_code == 200:
+            species_detalhes.append(resposta.json())
+        else:
+            print(f"Erro ao acessar {url}: {resposta.status_code}")
+
+    caminho_arquivo = f"{destino}/pokemons_species_raw.json"
+    
+    with open(caminho_arquivo, 'w') as f:
+        json.dump(species_detalhes, f, indent=4)
+
+    print(f"Sucesso! Species salvos em {caminho_arquivo}")
+
+

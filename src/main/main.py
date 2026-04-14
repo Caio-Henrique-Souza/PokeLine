@@ -1,4 +1,4 @@
-from src.extract.extract import extrair_pokemons, extrair_detalhes_pokemons
+from src.extract.extract import extrair_pokemons, extrair_detalhes_pokemons, extrair_species_pokemons
 def run_pipeline():
     
     print("--- INICIANDO PIPELINE ---")
@@ -8,6 +8,9 @@ def run_pipeline():
 
     print("Passo 2: Extraindo detalhes da base")
     extrair_detalhes_pokemons()
+
+    print("Passo 3: Extraindo detalhes do ovo")
+    extrair_species_pokemons()
 
     print("--- PIPELINE FINALIZADA... POR ENQUANTO ---")
 
