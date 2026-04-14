@@ -1,36 +1,41 @@
 import requests
-import pandas as pd
-
-url = 'https://pokeapi.co/api/v2/pokemon/'
-r = requests.get(url)
-data = r.json()
-
-pokemons = []
-
-for pokemon in data["results"]:
-    response = requests.get(pokemon["url"])
-    details = response.json()
-
-    r_egg = requests.get(f"https://pokeapi.co/api/v2/pokemon-species/{details['name']}")
-    egg_data = r_egg.json()
-    egg_groups = [e["name"] for e in egg_data["egg_groups"]]
-
-    stat_map = {s["stat"]["name"]: s["base_stat"] for s in details["stats"]}
+import json
+import os
+from datetime import datetime
 
 
+def extract_pokemon_raw(save_raw=True):
+    base_url = "https://pokeapi.co/api/v2/pokemon/"
+    
+    response = requests.get(base_url)
+    response.raise_for_status()
+    data = response.json()
 
-    pokemons.append({
-        "id": details["id"],
-        "name": details["name"],
-        "base_xp": details["base_experience"],
-        "weight": details["weight"],
-        "type": [t["type"]["name"] for t in details["types"]],
-        "specie": egg_groups,
-        **stat_map,
-        "sprite_default": details["sprites"]["front_default"],
-        "sprite_shiny": details["sprites"]["front_shiny"]
-    })
+    all_details = []
 
-df = pd.DataFrame(pokemons)
-df.to_csv("pokemons.csv", index=False, encoding="utf-8")
-print (df.head())
+    for pokemon in data["results"]:
+        details_response = requests.get(pokemon["url"])
+        details_response.raise_for_status()
+        details = details_response.json()
+
+        species_response = requests.get(
+            f"https://pokeapi.co/api/v2/pokemon-species/{details['name']}"
+        )
+        species_response.raise_for_status()
+        species_data = species_response.json()
+
+        # Guarda TUDO bruto, sem mexer
+        all_details.append({
+            "pokemon": details,
+            "species": species_data
+        })
+
+    # salvar RAW
+    if save_raw:
+        os.makedirs("data/raw", exist_ok=True)
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+        with open(f"data/raw/pokemon_raw_{timestamp}.json", "w", encoding="utf-8") as f:
+            json.dump(all_details, f, ensure_ascii=False)
+
+    return all_details
