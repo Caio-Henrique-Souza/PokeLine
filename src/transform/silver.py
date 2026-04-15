@@ -23,6 +23,9 @@ def transformar_dpokemon():
     return True
     
 def transformar_dpokestats():
+    import pandas as pd
+    import os
+
     caminho = "data/processed/dpokestats.csv"
     destino = "data/refined"
 
@@ -34,58 +37,64 @@ def transformar_dpokestats():
 
     df = pd.read_csv(caminho)
 
+    # 🔥 PADRONIZAÇÃO DE NOMES (HYPHEN → UNDERSCORE)
+    df = df.rename(columns={
+        "special-attack": "special_attack",
+        "special-defense": "special_defense"
+    })
+
     erros = []
 
     colunas_stats = [
         "hp", "attack", "defense",
-        "special-attack", "special-defense", "speed"
+        "special_attack", "special_defense", "speed"
     ]
 
     colunas_esperadas = ["pokemon_id"] + colunas_stats
 
-    # 1. Estrutura
+    # 🧱 1. Estrutura
     for col in colunas_esperadas:
         if col not in df.columns:
             erros.append(f"❌ Coluna ausente: {col}")
 
-    # 2. Nulls
+    # 🧪 2. Nulls
     nulls = df[colunas_esperadas].isnull().sum()
     for col, qtd in nulls.items():
         if qtd > 0:
-            erros.append(f"❌ {qtd} valores nulos na coluna {col}")
+            erros.append(f"❌ {qtd} valores nulos em {col}")
 
-    # 3. Duplicidade
+    # 🔁 3. Duplicidade
     duplicados = df["pokemon_id"].duplicated().sum()
     if duplicados > 0:
         erros.append(f"❌ {duplicados} pokemon_id duplicados")
 
-    # 4. Valores inválidos
+    # 📉 4. Valores inválidos
     for col in colunas_stats:
         if (df[col] <= 0).sum() > 0:
-            erros.append(f"❌ Valores inválidos (<=0) na coluna {col}")
+            erros.append(f"❌ Valores inválidos (<=0) em {col}")
 
-    # 5. Tipo numérico
+    # 🧠 5. Tipos
     for col in colunas_esperadas:
         if not pd.api.types.is_numeric_dtype(df[col]):
             erros.append(f"❌ Coluna {col} não é numérica")
 
-    # 6. Soma de stats
+    # 📊 6. Soma stats
     soma_stats = df[colunas_stats].sum(axis=1)
     if (soma_stats > 800).sum() > 0:
-        erros.append("❌ Existem pokémons com soma de stats muito alta (>800)")
+        erros.append("❌ Soma de stats > 800 detectada")
 
-    # 🚨 Se erro → para
+    # 🚨 erro bloqueia
     if erros:
         print("🚨 ERROS ENCONTRADOS:")
         for erro in erros:
             print(erro)
         return False
 
-    # 💾 Salvar refined
+    # 💾 salva refined
     caminho_saida = f"{destino}/dpokestats_refined.csv"
     df.to_csv(caminho_saida, index=False)
 
-    print(f"✅ dpokestats refinado salvo em {caminho_saida}")
+    print(f"🔥 dpokestats refinado salvo: {len(df)} linhas")
     return True
 
 def transformar_dpoketype():
@@ -325,14 +334,13 @@ def transformar_dpokemoves():
             print(erro)
         return False
 
-    # 💾 Regravar arquivo refined (limpo)
     caminho_saida = f"{destino}/dpokemoves_refined.csv"
-    df.to_csv(caminho_saida, index=False)
+    df.to_csv(caminho_saida, index=False, encoding="utf-8")
 
     print(f"🔥 dpokemoves refinado validado e regravado: {len(df)} linhas")
     return True
 
-transformar_dpokemoves()
+transformar_dpokestats()
 
 
 
