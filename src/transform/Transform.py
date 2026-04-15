@@ -112,4 +112,36 @@ def criar_dpoketype():
 
     print(f"✅ dPokemon criado com sucesso em {caminho_arquivo}")
 
-criar_dpoketype()
+def criar_dpokeegg():
+    origem = "data/raw/pokemons_species_raw.json"
+    destino = "data/processed"
+    
+    os.makedirs(destino, exist_ok=True)
+
+    with open(origem, 'r') as f:
+        dados = json.load(f)
+
+    lista = []
+
+    for pokemon in dados:
+        lista.append({
+            "pokemon_id": pokemon["id"],
+            "is_legendary": pokemon["is_legendary"],
+            "is_mythical": pokemon["is_mythical"],
+            "hatch_counter": pokemon["hatch_counter"],
+            "generation": pokemon["generation"]["name"],
+            "growth_rate": pokemon["growth_rate"]["name"],
+            "habitat": pokemon["habitat"]["name"]if pokemon["habitat"] else None,
+            "evolves_from": pokemon["evolves_from_species"]["name"] if pokemon["evolves_from_species"] else None,
+            "egg": [egg["name"] for egg in pokemon["egg_groups"]]
+
+        })
+
+    df = pd.DataFrame(lista)
+
+    caminho_arquivo = f"{destino}/dPokeEgg.csv"
+    df.to_csv(caminho_arquivo, index=False)
+
+    print(f"✅ dPokemon criado com sucesso em {caminho_arquivo}")
+
+criar_dpokeegg()
