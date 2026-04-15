@@ -1,5 +1,5 @@
 from src.extract.extract import extrair_pokemons, extrair_detalhes_pokemons, extrair_species_pokemons
-from src.transform.Transform import
+from src.transform.Transform import criar_dpokemon, criar_dpokecharac,criar_dpokestats
 def run_pipeline():
     
     print("--- INICIANDO PIPELINE ---")

@@ -86,4 +86,30 @@ def criar_dpokecharac():
     print(f"✅ dPokemon criado com sucesso em {caminho_arquivo}")
 
 
-criar_dpokecharac()
+def criar_dpoketype():
+    origem = "data/raw/pokemons_detalhes_raw.json"
+    destino = "data/processed"
+    
+    os.makedirs(destino, exist_ok=True)
+
+    with open(origem, 'r') as f:
+        dados = json.load(f)
+
+    lista = []
+
+    for pokemon in dados:
+        lista.append({
+            "pokemon_id": pokemon["id"],
+            "type": [type["type"]["name"] for type in pokemon["types"]]
+
+            
+        })
+
+    df = pd.DataFrame(lista)
+
+    caminho_arquivo = f"{destino}/dPokeType.csv"
+    df.to_csv(caminho_arquivo, index=False)
+
+    print(f"✅ dPokemon criado com sucesso em {caminho_arquivo}")
+
+criar_dpoketype()
