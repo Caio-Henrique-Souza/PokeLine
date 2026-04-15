@@ -16,9 +16,7 @@ def criar_dpokemon():
     for pokemon in dados:
         lista.append({
             "pokemon_id": pokemon["id"],
-            "name": pokemon["name"],
-            "height": pokemon["height"],
-            "weight": pokemon["weight"]
+            "name": pokemon["name"]
         })
 
     df = pd.DataFrame(lista)
@@ -59,5 +57,33 @@ def criar_dpokestats():
 
     print(f"✅ dPokemon criado com sucesso em {caminho_arquivo}")
 
+def criar_dpokecharac():
+    origem = "data/raw/pokemons_detalhes_raw.json"
+    destino = "data/processed"
+    
+    os.makedirs(destino, exist_ok=True)
 
-criar_dpokestats()
+    with open(origem, 'r') as f:
+        dados = json.load(f)
+
+    lista = []
+
+    for pokemon in dados:
+        lista.append({
+            "pokemon_id": pokemon["id"],
+            "base_xp": pokemon["base_experience"],
+            "height": pokemon["height"],
+            "weight": pokemon["weight"],
+            "Abilities": [abilitie["ability"]["name"] for abilitie in pokemon["abilities"]]
+            
+        })
+
+    df = pd.DataFrame(lista)
+
+    caminho_arquivo = f"{destino}/dPokeCharac.csv"
+    df.to_csv(caminho_arquivo, index=False)
+
+    print(f"✅ dPokemon criado com sucesso em {caminho_arquivo}")
+
+
+criar_dpokecharac()
