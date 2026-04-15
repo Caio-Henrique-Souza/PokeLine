@@ -55,7 +55,7 @@ def criar_dpokestats():
     caminho_arquivo = f"{destino}/dPokeStats.csv"
     df.to_csv(caminho_arquivo, index=False)
 
-    print(f"✅ dPokemon criado com sucesso em {caminho_arquivo}")
+    print(f"✅ dPokeStats criado com sucesso em {caminho_arquivo}")
 
 def criar_dpokecharac():
     origem = "data/raw/pokemons_detalhes_raw.json"
@@ -83,7 +83,7 @@ def criar_dpokecharac():
     caminho_arquivo = f"{destino}/dPokeCharac.csv"
     df.to_csv(caminho_arquivo, index=False)
 
-    print(f"✅ dPokemon criado com sucesso em {caminho_arquivo}")
+    print(f"✅ dPokeCharac criado com sucesso em {caminho_arquivo}")
 
 
 def criar_dpoketype():
@@ -110,7 +110,7 @@ def criar_dpoketype():
     caminho_arquivo = f"{destino}/dPokeType.csv"
     df.to_csv(caminho_arquivo, index=False)
 
-    print(f"✅ dPokemon criado com sucesso em {caminho_arquivo}")
+    print(f"✅ dPokeType criado com sucesso em {caminho_arquivo}")
 
 def criar_dpokeegg():
     origem = "data/raw/pokemons_species_raw.json"
@@ -142,6 +142,34 @@ def criar_dpokeegg():
     caminho_arquivo = f"{destino}/dPokeEgg.csv"
     df.to_csv(caminho_arquivo, index=False)
 
-    print(f"✅ dPokemon criado com sucesso em {caminho_arquivo}")
+    print(f"✅ dPokeEgg criado com sucesso em {caminho_arquivo}")
 
-criar_dpokeegg()
+
+def criar_dpokemoves():
+    origem = "data/raw/pokemons_detalhes_raw.json"
+    destino = "data/processed"
+    
+    os.makedirs(destino, exist_ok=True)
+
+    with open(origem, 'r') as f:
+        dados = json.load(f)
+
+    lista = []
+
+    for pokemon in dados:
+        lista.append({
+            "pokemon_id": pokemon["id"],
+            "move": [move["move"]["name"] for move in pokemon["moves"]],
+            "level_requirement": [move["version_group_details"][0]["level_learned_at"] for move in pokemon["moves"]],
+            "learn_method": [move["version_group_details"][0]["move_learn_method"]["name"] for move in pokemon["moves"]],
+            "game_version": [move["version_group_details"][0]["version_group"]["name"] for move in pokemon["moves"]]
+        })
+
+    df = pd.DataFrame(lista)
+
+    caminho_arquivo = f"{destino}/dPokeMoves.csv"
+    df.to_csv(caminho_arquivo, index=False)
+
+    print(f"✅ dPokeMoves criado com sucesso em {caminho_arquivo}")
+
+criar_dpokemoves()
