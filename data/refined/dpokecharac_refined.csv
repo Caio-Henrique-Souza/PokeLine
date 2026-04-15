@@ -1,2 +1,3 @@
 pokemon_id,base_xp,height,weight,abilities
-1,64,7,69,"['overgrow', 'chlorophyll']"
+1,64,7,69,overgrow
+1,64,7,69,chlorophyll

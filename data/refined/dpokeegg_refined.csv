@@ -1,0 +1,3 @@
+pokemon_id,is_legendary,is_mythical,hatch_counter,generation,growth_rate,habitat,evolves_from,egg
+1,False,False,20,generation-i,medium-slow,grassland,,monster
+1,False,False,20,generation-i,medium-slow,grassland,,plant

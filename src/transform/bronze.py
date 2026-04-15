@@ -74,7 +74,7 @@ def criar_dpokecharac():
             "base_xp": pokemon["base_experience"],
             "height": pokemon["height"],
             "weight": pokemon["weight"],
-            "Abilities": [abilitie["ability"]["name"] for abilitie in pokemon["abilities"]]
+            "abilities": [abilitie["ability"]["name"] for abilitie in pokemon["abilities"]]
             
         })
 
@@ -146,30 +146,40 @@ def criar_dpokeegg():
 
 
 def criar_dpokemoves():
+    import json
+    import os
+    import pandas as pd
+
     origem = "data/raw/pokemons_detalhes_raw.json"
     destino = "data/processed"
-    
+
     os.makedirs(destino, exist_ok=True)
 
-    with open(origem, 'r') as f:
+    with open(origem, "r", encoding="utf-8") as f:
         dados = json.load(f)
 
     lista = []
 
     for pokemon in dados:
-        lista.append({
-            "pokemon_id": pokemon["id"],
-            "move": [move["move"]["name"] for move in pokemon["moves"]],
-            "level_requirement": [move["version_group_details"][0]["level_learned_at"] for move in pokemon["moves"]],
-            "learn_method": [move["version_group_details"][0]["move_learn_method"]["name"] for move in pokemon["moves"]],
-            "game_version": [move["version_group_details"][0]["version_group"]["name"] for move in pokemon["moves"]]
-        })
+        pokemon_id = pokemon["id"]
+
+        for move in pokemon["moves"]:
+            move_name = move["move"]["name"]
+
+            for detail in move["version_group_details"]:
+                lista.append({
+                    "pokemon_id": pokemon_id,
+                    "move": move_name,
+                    "level_requirement": detail["level_learned_at"],
+                    "learn_method": detail["move_learn_method"]["name"],
+                    "game_version": detail["version_group"]["name"]
+                })
 
     df = pd.DataFrame(lista)
 
     caminho_arquivo = f"{destino}/dPokeMoves.csv"
     df.to_csv(caminho_arquivo, index=False)
 
-    print(f"✅ dPokeMoves criado com sucesso em {caminho_arquivo}")
+    print(f"🔥 dPokeMoves correto criado: {len(df)} linhas")
 
 criar_dpokemoves()
