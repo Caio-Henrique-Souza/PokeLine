@@ -11,7 +11,7 @@ HOST = os.getenv("POSTGRES_HOST")
 PORT = os.getenv("POSTGRES_PORT")
 DB = os.getenv("POSTGRES_DB")
 
-def carregar_moves():
+def carregar_pokemoves():
     
     df = pd.read_csv("data/refined/dpokemoves_refined.csv", encoding="utf-8")
 
@@ -137,10 +137,3 @@ def carregar_poketype():
     )
 
     print(f"🔥 Dados carregados no PostgreSQL: {len(df)} linhas")
-
-carregar_pokemon()
-carregar_moves()
-carregar_pokecharac()
-carregar_pokeegg()
-carregar_pokestats()
-carregar_poketype()
