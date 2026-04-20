@@ -11,6 +11,22 @@ HOST = os.getenv("POSTGRES_HOST")
 PORT = os.getenv("POSTGRES_PORT")
 DB = os.getenv("POSTGRES_DB")
 
+
+def criar_tabelas():
+    print("🧱 Criando tabelas no banco...")
+
+    engine = create_engine(
+        f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}"
+    )
+
+    with open("src/load/sqltable.sql", "r", encoding="utf-8") as f:
+        sql = f.read()
+
+    with engine.begin() as conn:
+        conn.execute(text(sql))
+
+    print("✅ Tabelas criadas/verificadas com sucesso")
+
 def carregar_pokemoves():
     
     df = pd.read_csv("data/refined/dpokemoves_refined.csv", encoding="utf-8")

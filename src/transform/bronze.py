@@ -182,4 +182,3 @@ def criar_dpokemoves():
 
     print(f"🔥 dPokeMoves correto criado: {len(df)} linhas")
 
-criar_dpokemon()

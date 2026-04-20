@@ -340,7 +340,6 @@ def transformar_dpokemoves():
     print(f"🔥 dpokemoves refinado validado e regravado: {len(df)} linhas")
     return True
 
-transformar_dpokestats()
 
 
 

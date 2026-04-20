@@ -1,7 +1,7 @@
 from src.extract.extract import extrair_pokemons, extrair_detalhes_pokemons, extrair_species_pokemons
 from src.transform.bronze import criar_dpokecharac, criar_dpokeegg, criar_dpokemon, criar_dpokemoves, criar_dpokestats, criar_dpoketype
 from src.transform.silver import transformar_dpokecharac, transformar_dpokeegg, transformar_dpokemon, transformar_dpokemoves, transformar_dpokestats,transformar_dpoketype
-from src.load.load import carregar_pokemoves, carregar_pokecharac,carregar_pokeegg,carregar_pokemon,carregar_pokestats,carregar_poketype
+from src.load.load import carregar_pokemoves, carregar_pokecharac,carregar_pokeegg,carregar_pokemon,carregar_pokestats,carregar_poketype, criar_tabelas
 def run_pipeline():
     
     print("--- INICIANDO PIPELINE ---")
@@ -34,6 +34,7 @@ def run_pipeline():
     transformar_dpoketype()
 
     print("passo 6: Carregar os dados")
+    criar_tabelas()
     carregar_pokemon()
     carregar_pokecharac()
     carregar_pokeegg()
