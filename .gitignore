@@ -12,3 +12,9 @@ data/processed/
 
 # Logs
 *.log
+
+#json
+.json
+
+#csv
+.csv
