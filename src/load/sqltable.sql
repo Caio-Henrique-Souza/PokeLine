@@ -1,7 +1,7 @@
 -- =========================
 -- FACT POKEMON
 -- =========================
-CREATE TABLE IF NOT EXISTS fact_pokemon (
+CREATE TABLE IF NOT EXISTS dimension_pokemon (
     pokemon_id SMALLINT PRIMARY KEY,
     name TEXT
 );
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS fact_pokemon (
 -- =========================
 -- FACT POKEMON TYPES
 -- =========================
-CREATE TABLE IF NOT EXISTS fact_poketype (
+CREATE TABLE IF NOT EXISTS dimension_poketype (
     pokemon_id SMALLINT,
     type TEXT,
     PRIMARY KEY (pokemon_id, type)
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS fact_poketype (
 -- =========================
 -- FACT POKEMON STATS
 -- =========================
-CREATE TABLE IF NOT EXISTS fact_pokestats (
+CREATE TABLE IF NOT EXISTS dimension_pokestats (
     pokemon_id SMALLINT PRIMARY KEY,
     hp SMALLINT,
     attack SMALLINT,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS fact_pokestats (
 -- =========================
 -- FACT POKEMON MOVES
 -- =========================
-CREATE TABLE IF NOT EXISTS fact_pokemon_moves (
+CREATE TABLE IF NOT EXISTS dimension_pokemoves (
     pokemon_id SMALLINT,
     move TEXT,
     level_requirement SMALLINT,
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS fact_pokemon_moves (
 -- =========================
 -- FACT POKEMON CHARACTERISTICS
 -- =========================
-CREATE TABLE IF NOT EXISTS fact_pokecharac (
+CREATE TABLE IF NOT EXISTS dimension_pokecharac (
     pokemon_id SMALLINT,
     base_xp SMALLINT,
     height SMALLINT,
@@ -52,10 +52,8 @@ CREATE TABLE IF NOT EXISTS fact_pokecharac (
     PRIMARY KEY (pokemon_id, abilities)
 );
 
--- =========================
--- FACT POKEMON EGG
--- =========================
-CREATE TABLE IF NOT EXISTS fact_pokeegg (
+
+CREATE TABLE IF NOT EXISTS dimension_pokeegg (
     pokemon_id SMALLINT,
     is_legendary BOOLEAN,
     is_mythical BOOLEAN,
@@ -66,4 +64,16 @@ CREATE TABLE IF NOT EXISTS fact_pokeegg (
     evolves_from TEXT,
     egg TEXT,
     PRIMARY KEY (pokemon_id, egg)
+);
+
+-- =========================
+-- FACT POKEMON SPRITES
+-- =========================
+
+CREATE TABLE IF NOT EXISTS dimension_pokesprites (
+    pokemon_id SMALLINT PRIMARY KEY,
+    back_default TEXT,
+    back_shiny TEXT,   
+    front_default TEXT,
+    front_shiny TEXT
 );

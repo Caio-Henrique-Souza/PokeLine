@@ -60,7 +60,7 @@ def carregar_csv_para_banco(caminho_csv, nome_tabela, engine):
 def carregar_pokemon(engine):
     carregar_csv_para_banco(
         "data/refined/dpokemon_refined.csv",
-        "fact_pokemon",
+        "dimension_pokemon",
         engine
     )
 
@@ -68,7 +68,7 @@ def carregar_pokemon(engine):
 def carregar_pokecharac(engine):
     carregar_csv_para_banco(
         "data/refined/dpokecharac_refined.csv",
-        "fact_pokecharac",
+        "dimension_pokecharac",
         engine
     )
 
@@ -76,7 +76,7 @@ def carregar_pokecharac(engine):
 def carregar_pokeegg(engine):
     carregar_csv_para_banco(
         "data/refined/dpokeegg_refined.csv",
-        "fact_pokeegg",
+        "dimension_pokeegg",
         engine
     )
 
@@ -84,7 +84,7 @@ def carregar_pokeegg(engine):
 def carregar_pokemoves(engine):
     carregar_csv_para_banco(
         "data/refined/dpokemoves_refined.csv",
-        "fact_pokemon_moves",
+        "dimension_pokemoves",
         engine
     )
 
@@ -92,7 +92,7 @@ def carregar_pokemoves(engine):
 def carregar_pokestats(engine):
     carregar_csv_para_banco(
         "data/refined/dpokestats_refined.csv",
-        "fact_pokestats",
+        "dimension_pokestats",
         engine
     )
 
@@ -100,6 +100,13 @@ def carregar_pokestats(engine):
 def carregar_poketype(engine):
     carregar_csv_para_banco(
         "data/refined/dpoketype_refined.csv",
-        "fact_poketype",
+        "dimension_poketype",
+        engine
+    )
+
+def carregar_pokesprite(engine):
+    carregar_csv_para_banco(
+        "data/refined/dpokesprites_refined.csv",
+        "dimension_pokesprites",
         engine
     )

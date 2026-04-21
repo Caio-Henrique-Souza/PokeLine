@@ -146,10 +146,6 @@ def criar_dpokeegg():
 
 
 def criar_dpokemoves():
-    import json
-    import os
-    import pandas as pd
-
     origem = "data/raw/pokemons_detalhes_raw.json"
     destino = "data/processed"
 
@@ -181,4 +177,32 @@ def criar_dpokemoves():
     df.to_csv(caminho_arquivo, index=False)
 
     print(f"🔥 dPokeMoves correto criado: {len(df)} linhas")
+
+def criar_dpokesprites():
+    origem = "data/raw/pokemons_detalhes_raw.json"
+    destino = "data/processed"
+    
+    os.makedirs(destino, exist_ok=True)
+
+    with open(origem, 'r') as f:
+        dados = json.load(f)
+
+    lista = []
+
+    for pokemon in dados:
+        lista.append({
+            "pokemon_id": pokemon["id"],
+            "back_default": pokemon["sprites"]["back_default"],
+            "back_shiny": pokemon["sprites"]["back_shiny"],
+            "front_default": pokemon["sprites"]["front_default"],
+            "front_shiny": pokemon["sprites"]["front_shiny"]
+
+        })
+
+    df = pd.DataFrame(lista)
+
+    caminho_arquivo = f"{destino}/dPokeSprites.csv"
+    df.to_csv(caminho_arquivo, index=False)
+
+    print(f"✅ dPokesprites criado com sucesso em {caminho_arquivo}")
 
