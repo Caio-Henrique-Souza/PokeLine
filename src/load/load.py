@@ -12,12 +12,18 @@ PORT = os.getenv("POSTGRES_PORT")
 DB = os.getenv("POSTGRES_DB")
 
 
-def criar_tabelas():
-    print("🧱 Criando tabelas no banco...")
-
-    engine = create_engine(
-        f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}"
+# 🔧 conexão única
+def get_engine():
+    return create_engine(
+        f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}",
+        pool_size=5,
+        max_overflow=10
     )
+
+
+# 🧱 criar tabelas
+def criar_tabelas(engine):
+    print("🧱 Criando tabelas no banco...")
 
     with open("src/load/sqltable.sql", "r", encoding="utf-8") as f:
         sql = f.read()
@@ -27,129 +33,73 @@ def criar_tabelas():
 
     print("✅ Tabelas criadas/verificadas com sucesso")
 
-def carregar_pokemoves():
-    
-    df = pd.read_csv("data/refined/dpokemoves_refined.csv", encoding="utf-8")
 
-    engine = create_engine(
-        f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}"
-    )
+# 🔥 função genérica de carga
+def carregar_csv_para_banco(caminho_csv, nome_tabela, engine):
     
+    print(f"📥 Carregando {nome_tabela}...")
+
+    df = pd.read_csv(caminho_csv, encoding="utf-8")
+
     with engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE fact_pokemon_moves"))
-
-    # 🚀 envia pro banco
-    df.to_sql(
-        "fact_pokemon_moves",
-        engine,
-        if_exists="append",  # troca tabela toda
-        index=False
-    )
-
-    print(f"🔥 Dados carregados no PostgreSQL: {len(df)} linhas")
-
-def carregar_pokemon():
-    
-    df = pd.read_csv("data/refined/dpokemon_refined.csv", encoding="utf-8")
-
-    engine = create_engine(
-        f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}"
-    )
-    
-    with engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE fact_pokemon"))
+        conn.execute(text(f"TRUNCATE TABLE {nome_tabela}"))
 
     df.to_sql(
-        "fact_pokemon",
+        nome_tabela,
         engine,
         if_exists="append",
-        index=False
-    )
-
-    print(f"🔥 Dados carregados no PostgreSQL: {len(df)} linhas")
-
-def carregar_pokeegg():
-    
-    df = pd.read_csv("data/refined/dpokeegg_refined.csv", encoding="utf-8")
-
-    engine = create_engine(
-        f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}"
-    )
-    
-    with engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE fact_pokeegg"))
-
-    # 🚀 envia pro banco
-    df.to_sql(
-        "fact_pokeegg",
-        engine,
-        if_exists="append",  # troca tabela toda
-        index=False
-    )
-
-    print(f"🔥 Dados carregados no PostgreSQL: {len(df)} linhas")
-
-def carregar_pokecharac():
-    
-    df = pd.read_csv("data/refined/dpokecharac_refined.csv", encoding="utf-8")
-
-    engine = create_engine(
-        f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}"
-    )
-    
-    with engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE fact_pokecharac"))
-
-    # 🚀 envia pro banco
-    df.to_sql(
-        "fact_pokecharac",
-        engine,
-        if_exists="append",  # troca tabela toda
-        index=False
-    )
-
-    print(f"🔥 Dados carregados no PostgreSQL: {len(df)} linhas")
-
-def carregar_pokestats():
-    
-    df = pd.read_csv("data/refined/dpokestats_refined.csv", encoding="utf-8")
-
-    engine = create_engine(
-        f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}"
-    )
-    
-    with engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE fact_pokestats"))
-
-
-    # 🚀 envia pro banco
-    df.to_sql(
-        "fact_pokestats",
-        engine,
-        if_exists="append",  # troca tabela toda
         index=False,
         method="multi"
     )
 
-    print(f"🔥 Dados carregados no PostgreSQL: {len(df)} linhas")
+    print(f"🔥 {nome_tabela}: {len(df)} linhas carregadas")
 
-def carregar_poketype():
-    
-    df = pd.read_csv("data/refined/dpoketype_refined.csv", encoding="utf-8")
 
-    engine = create_engine(
-        f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}"
+# 🧩 funções específicas (agora simples e limpas)
+
+def carregar_pokemon(engine):
+    carregar_csv_para_banco(
+        "data/refined/dpokemon_refined.csv",
+        "fact_pokemon",
+        engine
     )
-    
-    with engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE fact_poketype"))
 
-    # 🚀 envia pro banco
-    df.to_sql(
+
+def carregar_pokecharac(engine):
+    carregar_csv_para_banco(
+        "data/refined/dpokecharac_refined.csv",
+        "fact_pokecharac",
+        engine
+    )
+
+
+def carregar_pokeegg(engine):
+    carregar_csv_para_banco(
+        "data/refined/dpokeegg_refined.csv",
+        "fact_pokeegg",
+        engine
+    )
+
+
+def carregar_pokemoves(engine):
+    carregar_csv_para_banco(
+        "data/refined/dpokemoves_refined.csv",
+        "fact_pokemon_moves",
+        engine
+    )
+
+
+def carregar_pokestats(engine):
+    carregar_csv_para_banco(
+        "data/refined/dpokestats_refined.csv",
+        "fact_pokestats",
+        engine
+    )
+
+
+def carregar_poketype(engine):
+    carregar_csv_para_banco(
+        "data/refined/dpoketype_refined.csv",
         "fact_poketype",
-        engine,
-        if_exists="append", 
-        index=False
+        engine
     )
-
-    print(f"🔥 Dados carregados no PostgreSQL: {len(df)} linhas")
