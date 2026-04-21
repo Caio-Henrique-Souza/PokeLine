@@ -1,2 +1,152 @@
 pokemon_id,is_legendary,is_mythical,hatch_counter,generation,growth_rate,habitat,evolves_from,egg
 1,False,False,20,generation-i,medium-slow,grassland,,"['monster', 'plant']"
+2,False,False,20,generation-i,medium-slow,grassland,bulbasaur,"['monster', 'plant']"
+3,False,False,20,generation-i,medium-slow,grassland,ivysaur,"['monster', 'plant']"
+4,False,False,20,generation-i,medium-slow,mountain,,"['monster', 'dragon']"
+5,False,False,20,generation-i,medium-slow,mountain,charmander,"['monster', 'dragon']"
+6,False,False,20,generation-i,medium-slow,mountain,charmeleon,"['monster', 'dragon']"
+7,False,False,20,generation-i,medium-slow,waters-edge,,"['monster', 'water1']"
+8,False,False,20,generation-i,medium-slow,waters-edge,squirtle,"['monster', 'water1']"
+9,False,False,20,generation-i,medium-slow,waters-edge,wartortle,"['monster', 'water1']"
+10,False,False,15,generation-i,medium,forest,,['bug']
+11,False,False,15,generation-i,medium,forest,caterpie,['bug']
+12,False,False,15,generation-i,medium,forest,metapod,['bug']
+13,False,False,15,generation-i,medium,forest,,['bug']
+14,False,False,15,generation-i,medium,forest,weedle,['bug']
+15,False,False,15,generation-i,medium,forest,kakuna,['bug']
+16,False,False,15,generation-i,medium-slow,forest,,['flying']
+17,False,False,15,generation-i,medium-slow,forest,pidgey,['flying']
+18,False,False,15,generation-i,medium-slow,forest,pidgeotto,['flying']
+19,False,False,15,generation-i,medium,grassland,,['ground']
+20,False,False,15,generation-i,medium,grassland,rattata,['ground']
+21,False,False,15,generation-i,medium,rough-terrain,,['flying']
+22,False,False,15,generation-i,medium,rough-terrain,spearow,['flying']
+23,False,False,20,generation-i,medium,grassland,,"['ground', 'dragon']"
+24,False,False,20,generation-i,medium,grassland,ekans,"['ground', 'dragon']"
+25,False,False,10,generation-i,medium,forest,pichu,"['ground', 'fairy']"
+26,False,False,10,generation-i,medium,forest,pikachu,"['ground', 'fairy']"
+27,False,False,20,generation-i,medium,rough-terrain,,['ground']
+28,False,False,20,generation-i,medium,rough-terrain,sandshrew,['ground']
+29,False,False,20,generation-i,medium-slow,grassland,,"['monster', 'ground']"
+30,False,False,20,generation-i,medium-slow,grassland,nidoran-f,['no-eggs']
+31,False,False,20,generation-i,medium-slow,grassland,nidorina,['no-eggs']
+32,False,False,20,generation-i,medium-slow,grassland,,"['monster', 'ground']"
+33,False,False,20,generation-i,medium-slow,grassland,nidoran-m,"['monster', 'ground']"
+34,False,False,20,generation-i,medium-slow,grassland,nidorino,"['monster', 'ground']"
+35,False,False,10,generation-i,fast,mountain,cleffa,['fairy']
+36,False,False,10,generation-i,fast,mountain,clefairy,['fairy']
+37,False,False,20,generation-i,medium,grassland,,['ground']
+38,False,False,20,generation-i,medium,grassland,vulpix,['ground']
+39,False,False,10,generation-i,fast,grassland,igglybuff,['fairy']
+40,False,False,10,generation-i,fast,grassland,jigglypuff,['fairy']
+41,False,False,15,generation-i,medium,cave,,['flying']
+42,False,False,15,generation-i,medium,cave,zubat,['flying']
+43,False,False,20,generation-i,medium-slow,grassland,,['plant']
+44,False,False,20,generation-i,medium-slow,grassland,oddish,['plant']
+45,False,False,20,generation-i,medium-slow,grassland,gloom,['plant']
+46,False,False,20,generation-i,medium,forest,,"['bug', 'plant']"
+47,False,False,20,generation-i,medium,forest,paras,"['bug', 'plant']"
+48,False,False,20,generation-i,medium,forest,,['bug']
+49,False,False,20,generation-i,medium,forest,venonat,['bug']
+50,False,False,20,generation-i,medium,cave,,['ground']
+51,False,False,20,generation-i,medium,cave,diglett,['ground']
+52,False,False,20,generation-i,medium,urban,,['ground']
+53,False,False,20,generation-i,medium,urban,meowth,['ground']
+54,False,False,20,generation-i,medium,waters-edge,,"['water1', 'ground']"
+55,False,False,20,generation-i,medium,waters-edge,psyduck,"['water1', 'ground']"
+56,False,False,20,generation-i,medium,mountain,,['ground']
+57,False,False,20,generation-i,medium,mountain,mankey,['ground']
+58,False,False,20,generation-i,slow,grassland,,['ground']
+59,False,False,20,generation-i,slow,grassland,growlithe,['ground']
+60,False,False,20,generation-i,medium-slow,waters-edge,,['water1']
+61,False,False,20,generation-i,medium-slow,waters-edge,poliwag,['water1']
+62,False,False,20,generation-i,medium-slow,waters-edge,poliwhirl,['water1']
+63,False,False,20,generation-i,medium-slow,urban,,['humanshape']
+64,False,False,20,generation-i,medium-slow,urban,abra,['humanshape']
+65,False,False,20,generation-i,medium-slow,urban,kadabra,['humanshape']
+66,False,False,20,generation-i,medium-slow,mountain,,['humanshape']
+67,False,False,20,generation-i,medium-slow,mountain,machop,['humanshape']
+68,False,False,20,generation-i,medium-slow,mountain,machoke,['humanshape']
+69,False,False,20,generation-i,medium-slow,forest,,['plant']
+70,False,False,20,generation-i,medium-slow,forest,bellsprout,['plant']
+71,False,False,20,generation-i,medium-slow,forest,weepinbell,['plant']
+72,False,False,20,generation-i,slow,sea,,['water3']
+73,False,False,20,generation-i,slow,sea,tentacool,['water3']
+74,False,False,15,generation-i,medium-slow,mountain,,['mineral']
+75,False,False,15,generation-i,medium-slow,mountain,geodude,['mineral']
+76,False,False,15,generation-i,medium-slow,mountain,graveler,['mineral']
+77,False,False,20,generation-i,medium,grassland,,['ground']
+78,False,False,20,generation-i,medium,grassland,ponyta,['ground']
+79,False,False,20,generation-i,medium,waters-edge,,"['monster', 'water1']"
+80,False,False,20,generation-i,medium,waters-edge,slowpoke,"['monster', 'water1']"
+81,False,False,20,generation-i,medium,rough-terrain,,['mineral']
+82,False,False,20,generation-i,medium,rough-terrain,magnemite,['mineral']
+83,False,False,20,generation-i,medium,grassland,,"['flying', 'ground']"
+84,False,False,20,generation-i,medium,grassland,,['flying']
+85,False,False,20,generation-i,medium,grassland,doduo,['flying']
+86,False,False,20,generation-i,medium,sea,,"['water1', 'ground']"
+87,False,False,20,generation-i,medium,sea,seel,"['water1', 'ground']"
+88,False,False,20,generation-i,medium,urban,,['indeterminate']
+89,False,False,20,generation-i,medium,urban,grimer,['indeterminate']
+90,False,False,20,generation-i,slow,sea,,['water3']
+91,False,False,20,generation-i,slow,sea,shellder,['water3']
+92,False,False,20,generation-i,medium-slow,cave,,['indeterminate']
+93,False,False,20,generation-i,medium-slow,cave,gastly,['indeterminate']
+94,False,False,20,generation-i,medium-slow,cave,haunter,['indeterminate']
+95,False,False,25,generation-i,medium,cave,,['mineral']
+96,False,False,20,generation-i,medium,grassland,,['humanshape']
+97,False,False,20,generation-i,medium,grassland,drowzee,['humanshape']
+98,False,False,20,generation-i,medium,waters-edge,,['water3']
+99,False,False,20,generation-i,medium,waters-edge,krabby,['water3']
+100,False,False,20,generation-i,medium,urban,,['mineral']
+101,False,False,20,generation-i,medium,urban,voltorb,['mineral']
+102,False,False,20,generation-i,slow,forest,,['plant']
+103,False,False,20,generation-i,slow,forest,exeggcute,['plant']
+104,False,False,20,generation-i,medium,mountain,,['monster']
+105,False,False,20,generation-i,medium,mountain,cubone,['monster']
+106,False,False,25,generation-i,medium,urban,tyrogue,['humanshape']
+107,False,False,25,generation-i,medium,urban,tyrogue,['humanshape']
+108,False,False,20,generation-i,medium,grassland,,['monster']
+109,False,False,20,generation-i,medium,urban,,['indeterminate']
+110,False,False,20,generation-i,medium,urban,koffing,['indeterminate']
+111,False,False,20,generation-i,slow,rough-terrain,,"['monster', 'ground']"
+112,False,False,20,generation-i,slow,rough-terrain,rhyhorn,"['monster', 'ground']"
+113,False,False,40,generation-i,fast,urban,happiny,['fairy']
+114,False,False,20,generation-i,medium,grassland,,['plant']
+115,False,False,20,generation-i,medium,grassland,,['monster']
+116,False,False,20,generation-i,medium,sea,,"['water1', 'dragon']"
+117,False,False,20,generation-i,medium,sea,horsea,"['water1', 'dragon']"
+118,False,False,20,generation-i,medium,waters-edge,,['water2']
+119,False,False,20,generation-i,medium,waters-edge,goldeen,['water2']
+120,False,False,20,generation-i,slow,sea,,['water3']
+121,False,False,20,generation-i,slow,sea,staryu,['water3']
+122,False,False,25,generation-i,medium,urban,mime-jr,['humanshape']
+123,False,False,25,generation-i,medium,grassland,,['bug']
+124,False,False,25,generation-i,medium,urban,smoochum,['humanshape']
+125,False,False,25,generation-i,medium,grassland,elekid,['humanshape']
+126,False,False,25,generation-i,medium,mountain,magby,['humanshape']
+127,False,False,25,generation-i,slow,forest,,['bug']
+128,False,False,20,generation-i,slow,grassland,,['ground']
+129,False,False,5,generation-i,slow,waters-edge,,"['water2', 'dragon']"
+130,False,False,5,generation-i,slow,waters-edge,magikarp,"['water2', 'dragon']"
+131,False,False,40,generation-i,slow,sea,,"['monster', 'water1']"
+132,False,False,20,generation-i,medium,urban,,['ditto']
+133,False,False,35,generation-i,medium,urban,,['ground']
+134,False,False,35,generation-i,medium,urban,eevee,['ground']
+135,False,False,35,generation-i,medium,urban,eevee,['ground']
+136,False,False,35,generation-i,medium,urban,eevee,['ground']
+137,False,False,20,generation-i,medium,urban,,['mineral']
+138,False,False,30,generation-i,medium,sea,,"['water1', 'water3']"
+139,False,False,30,generation-i,medium,sea,omanyte,"['water1', 'water3']"
+140,False,False,30,generation-i,medium,sea,,"['water1', 'water3']"
+141,False,False,30,generation-i,medium,sea,kabuto,"['water1', 'water3']"
+142,False,False,35,generation-i,slow,mountain,,['flying']
+143,False,False,40,generation-i,slow,mountain,munchlax,['monster']
+144,True,False,80,generation-i,slow,rare,,['no-eggs']
+145,True,False,80,generation-i,slow,rare,,['no-eggs']
+146,True,False,80,generation-i,slow,rare,,['no-eggs']
+147,False,False,40,generation-i,slow,waters-edge,,"['water1', 'dragon']"
+148,False,False,40,generation-i,slow,waters-edge,dratini,"['water1', 'dragon']"
+149,False,False,40,generation-i,slow,waters-edge,dragonair,"['water1', 'dragon']"
+150,True,False,120,generation-i,slow,rare,,['no-eggs']
+151,False,True,120,generation-i,medium-slow,rare,,['no-eggs']

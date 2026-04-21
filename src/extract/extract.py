@@ -1,25 +1,44 @@
 import requests
 import json
 import os
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
+
+# 🔧 função genérica para requests
+def get_json(url):
+    try:
+        resposta = requests.get(url, timeout=10)
+        if resposta.status_code == 200:
+            return resposta.json()
+        else:
+            print(f"Erro ao acessar {url}: {resposta.status_code}")
+            return None
+    except Exception as e:
+        print(f"Erro na request {url}: {e}")
+        return None
+
+
+# 🔵 1. Extrair lista base (SEM paralelismo)
 def extrair_pokemons(quantidade=151):
     url = f"https://pokeapi.co/api/v2/pokemon?limit={quantidade}"
     destino = "data/raw"
-    resposta = requests.get(url)
 
-    os.makedirs(destino, exist_ok=True) #garantindo que a pasta exista
+    os.makedirs(destino, exist_ok=True)
 
-    if resposta.status_code == 200: #se não der erro na API
-        dados = resposta.json()
+    dados = get_json(url)
 
-        caminho_arquivo = f"{destino}/pokemons_base_raw.json"
-        with open(caminho_arquivo, 'w') as f:
-            json.dump(dados, f, indent= 4)
+    if not dados:
+        print("Erro ao acessar a API")
+        return
 
-        print(f"Sucesso! {quantidade} Pokémons Salvos em {caminho_arquivo}")
-    else:
-        print(f"Erro ao acessar a API: {resposta.status_code}")
+    caminho_arquivo = f"{destino}/pokemons_base_raw.json"
+    with open(caminho_arquivo, 'w') as f:
+        json.dump(dados, f, indent=4)
 
+    print(f"✅ Sucesso! {quantidade} Pokémons salvos em {caminho_arquivo}")
+
+
+# 🟡 2. Extrair detalhes (COM paralelismo)
 def extrair_detalhes_pokemons():
     origem = "data/raw/pokemons_base_raw.json"
     destino = "data/raw"
@@ -29,29 +48,30 @@ def extrair_detalhes_pokemons():
     with open(origem, 'r') as f:
         dados = json.load(f)
 
+    urls = [pokemon["url"] for pokemon in dados["results"]]
+
     detalhes = []
 
-    for pokemon in dados["results"]:
-        url = pokemon["url"]
-        
-        resposta = requests.get(url)
-        
-        if resposta.status_code == 200:
-            detalhes.append(resposta.json())
-        else:
-            print(f"Erro ao acessar {url}: {resposta.status_code}")
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        futures = [executor.submit(get_json, url) for url in urls]
+
+        for future in as_completed(futures):
+            resultado = future.result()
+            if resultado:
+                detalhes.append(resultado)
+
+    # opcional: ordenar por id (evita bagunça por paralelismo)
+    detalhes.sort(key=lambda x: x["id"])
 
     caminho_arquivo = f"{destino}/pokemons_detalhes_raw.json"
     
     with open(caminho_arquivo, 'w') as f:
         json.dump(detalhes, f, indent=4)
 
-    print(f"Sucesso! Detalhes salvos em {caminho_arquivo}")
+    print(f"🔥 Sucesso! Detalhes salvos em {caminho_arquivo}")
 
-import json
-import os
-import requests
 
+# 🔴 3. Extrair species (COM paralelismo)
 def extrair_species_pokemons():
     origem = "data/raw/pokemons_detalhes_raw.json"
     destino = "data/raw"
@@ -61,23 +81,24 @@ def extrair_species_pokemons():
     with open(origem, 'r') as f:
         dados = json.load(f)
 
+    urls = [pokemon["species"]["url"] for pokemon in dados]
+
     species_detalhes = []
 
-    for pokemon in dados:
-        url = pokemon["species"]["url"]
-        
-        resposta = requests.get(url)
-        
-        if resposta.status_code == 200:
-            species_detalhes.append(resposta.json())
-        else:
-            print(f"Erro ao acessar {url}: {resposta.status_code}")
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        futures = [executor.submit(get_json, url) for url in urls]
+
+        for future in as_completed(futures):
+            resultado = future.result()
+            if resultado:
+                species_detalhes.append(resultado)
+
+    # ordenar por id também
+    species_detalhes.sort(key=lambda x: x["id"])
 
     caminho_arquivo = f"{destino}/pokemons_species_raw.json"
     
     with open(caminho_arquivo, 'w') as f:
         json.dump(species_detalhes, f, indent=4)
 
-    print(f"Sucesso! Species salvos em {caminho_arquivo}")
-
-
+    print(f"🔥 Sucesso! Species salvos em {caminho_arquivo}")
