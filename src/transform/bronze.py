@@ -206,3 +206,27 @@ def criar_dpokesprites():
 
     print(f"✅ dPokesprites criado com sucesso em {caminho_arquivo}")
 
+def criar_dpokegen():
+    origem = "data/raw/generation_version_group_raw.json"
+    destino = "data/processed"
+    
+    os.makedirs(destino, exist_ok=True)
+
+    with open(origem, 'r') as f:
+        dados = json.load(f)
+
+    lista = []
+
+    for gen in dados:
+        lista.append({
+            "game_gen": gen["generation"],
+            "version_group": gen["version_group"]
+
+        })
+
+    df = pd.DataFrame(lista)
+
+    caminho_arquivo = f"{destino}/dPokeGen.csv"
+    df.to_csv(caminho_arquivo, index=False)
+
+    print(f"✅ dPokeGen criado com sucesso em {caminho_arquivo}")

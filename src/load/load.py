@@ -110,3 +110,11 @@ def carregar_pokesprite(engine):
         "dimension_pokesprites",
         engine
     )
+
+def carregar_pokegen(engine):
+    carregar_csv_para_banco(
+        "data/refined/dpokegen_refined.csv",
+        "dimension_pokegen",
+        engine
+    )
+

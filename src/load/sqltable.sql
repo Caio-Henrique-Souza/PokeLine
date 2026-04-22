@@ -77,3 +77,9 @@ CREATE TABLE IF NOT EXISTS dimension_pokesprites (
     front_default TEXT,
     front_shiny TEXT
 );
+
+CREATE TABLE IF NOT EXISTS dimension_pokegen (
+    game_gen TEXT,
+    version_group text,
+    PRIMARY KEY(game_gen,version_group)
+);

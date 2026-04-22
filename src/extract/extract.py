@@ -102,3 +102,43 @@ def extrair_species_pokemons():
         json.dump(species_detalhes, f, indent=4)
 
     print(f"🔥 Sucesso! Species salvos em {caminho_arquivo}")
+
+def extrair_gameversion(quantidade=9):
+    url = f"https://pokeapi.co/api/v2/generation?limit={quantidade}"
+    destino = "data/raw"
+
+    os.makedirs(destino, exist_ok=True)
+
+    dados = get_json(url)
+
+    if not dados:
+        print("Erro ao acessar a API")
+        return
+
+    lista = []
+
+    for gen in dados["results"]:
+        gen_nome = gen["name"]
+        gen_url = gen["url"]
+
+        # 🔥 aqui está o pulo do gato
+        gen_detalhe = get_json(gen_url)
+
+        if not gen_detalhe:
+            continue
+
+        for vg in gen_detalhe["version_groups"]:
+            lista.append({
+                "generation": gen_nome,
+                "version_group": vg["name"]
+            })
+
+    caminho_arquivo = f"{destino}/generation_version_group_raw.json"
+
+    with open(caminho_arquivo, 'w') as f:
+        json.dump(lista, f, indent=4)
+
+    print(f"✅ Mapeamento generation → version_group salvo em {caminho_arquivo}")
+
+
+

@@ -396,4 +396,56 @@ def transformar_dpokesprites():
     print(f"🔥 dpokesprites refinado salvo: {len(df)} linhas")
     return True
 
+def transformar_dpokegen():
 
+    caminho = "data/processed/dpokeGen.csv"
+    destino = "data/refined"
+
+    os.makedirs(destino, exist_ok=True)
+
+    if not os.path.exists(caminho):
+        print(f"❌ Arquivo não encontrado: {caminho}")
+        return False
+
+    df = pd.read_csv(caminho)
+
+    erros = []
+
+    colunas_esperadas = ["game_gen", "version_group"]
+
+    # 🧱 1. Estrutura
+    for col in colunas_esperadas:
+        if col not in df.columns:
+            erros.append(f"❌ Coluna ausente: {col}")
+
+    # 🧪 2. Nulls
+    nulls = df[colunas_esperadas].isnull().sum()
+    for col, qtd in nulls.items():
+        if qtd > 0:
+            erros.append(f"❌ {qtd} valores nulos em {col}")
+
+    # 🔁 3. Duplicidade
+    duplicados = df["version_group"].duplicated().sum()
+    if duplicados > 0:
+        erros.append(f"❌ {duplicados} version_group duplicados")
+
+    # 🧠 5. Tipos
+    for col in colunas_esperadas:
+        if not pd.api.types.is_string_dtype(df[col]):
+            erros.append(f"❌ Coluna {col} não é string")
+
+    
+
+    # 🚨 erro bloqueia
+    if erros:
+        print("🚨 ERROS ENCONTRADOS:")
+        for erro in erros:
+            print(erro)
+        return False
+
+    # 💾 salva refined
+    caminho_saida = f"{destino}/dpokegen_refined.csv"
+    df.to_csv(caminho_saida, index=False)
+
+    print(f"🔥 dpokegen refinado salvo: {len(df)} linhas")
+    return True
