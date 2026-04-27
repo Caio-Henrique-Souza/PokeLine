@@ -9,7 +9,7 @@ def run_pipeline(extract=True):
     
     if extract:
         print("[EXTRACT] Extração de dados")
-        extrair_pokemons(3)
+        extrair_pokemons(1350)
         extrair_gameversion(9)
         extrair_detalhes_pokemons()
         extrair_species_pokemons()
