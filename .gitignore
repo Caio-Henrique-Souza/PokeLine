@@ -1,21 +1,38 @@
-# Python
+### --- PYTHON & AMBIENTE --- ###
 __pycache__/
 *.pyc
-
-# Ambiente
+*.pyo
+*.pyd
 .env
 venv/
+.venv/
+.vscode/
+.idea/
 
-# Dados
-data/raw/
-data/processed/
-data/refined/
+### --- PROJETO POKELINE (DADOS) --- ###
+# Ignora todos os arquivos dentro das pastas de dados, mas mantém as pastas
+data/raw/*
+data/processed/*
+data/refined/*
+# Se quiser ignorar arquivos soltos no diretório raiz
+*.json
+*.csv
+*.xlsx
 
-# Logs
-*.log
+### --- DOCKER & BANCO DE DADOS --- ###
+# CRÍTICO: Ignora os dados reais do banco de dados para não subir GB de lixo
+postgres_data/
+# Ignora o banco de dados interno do Airflow se ele criar localmente
+airflow_db/
 
-#json
-.json
+### --- AIRFLOW --- ###
+# Ignora logs de execução e arquivos de controle
+logs/
+airflow.cfg
+airflow-webserver.pid
+webserver_config.py
+unittests.cfg
 
-#csv
-.csv
+### --- SISTEMA --- ###
+.DS_Store
+Thumbs.db

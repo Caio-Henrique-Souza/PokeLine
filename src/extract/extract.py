@@ -4,7 +4,7 @@ import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
-# 🔧 função genérica para requests
+
 def get_json(url):
     try:
         resposta = requests.get(url, timeout=10)
@@ -17,8 +17,6 @@ def get_json(url):
         print(f"Erro na request {url}: {e}")
         return None
 
-
-# 🔵 1. Extrair lista base (SEM paralelismo)
 def extrair_pokemons(quantidade=151):
     url = f"https://pokeapi.co/api/v2/pokemon?limit={quantidade}"
     destino = "data/raw"
@@ -37,8 +35,6 @@ def extrair_pokemons(quantidade=151):
 
     print(f"✅ Sucesso! {quantidade} Pokémons salvos em {caminho_arquivo}")
 
-
-# 🟡 2. Extrair detalhes (COM paralelismo)
 def extrair_detalhes_pokemons():
     origem = "data/raw/pokemons_base_raw.json"
     destino = "data/raw"
@@ -70,8 +66,6 @@ def extrair_detalhes_pokemons():
 
     print(f"🔥 Sucesso! Detalhes salvos em {caminho_arquivo}")
 
-
-# 🔴 3. Extrair species (COM paralelismo)
 def extrair_species_pokemons():
     origem = "data/raw/pokemons_detalhes_raw.json"
     destino = "data/raw"
@@ -139,6 +133,3 @@ def extrair_gameversion(quantidade=9):
         json.dump(lista, f, indent=4)
 
     print(f"✅ Mapeamento generation → version_group salvo em {caminho_arquivo}")
-
-
-

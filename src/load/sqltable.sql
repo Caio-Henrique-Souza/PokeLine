@@ -1,23 +1,14 @@
--- =========================
--- FACT POKEMON
--- =========================
 CREATE TABLE IF NOT EXISTS dimension_pokemon (
     pokemon_id SMALLINT PRIMARY KEY,
     name TEXT
 );
 
--- =========================
--- FACT POKEMON TYPES
--- =========================
 CREATE TABLE IF NOT EXISTS dimension_poketype (
     pokemon_id SMALLINT,
     type TEXT,
     PRIMARY KEY (pokemon_id, type)
 );
 
--- =========================
--- FACT POKEMON STATS
--- =========================
 CREATE TABLE IF NOT EXISTS dimension_pokestats (
     pokemon_id SMALLINT PRIMARY KEY,
     hp SMALLINT,
@@ -28,9 +19,6 @@ CREATE TABLE IF NOT EXISTS dimension_pokestats (
     speed SMALLINT
 );
 
--- =========================
--- FACT POKEMON MOVES
--- =========================
 CREATE TABLE IF NOT EXISTS dimension_pokemoves (
     pokemon_id SMALLINT,
     move TEXT,
@@ -40,9 +28,6 @@ CREATE TABLE IF NOT EXISTS dimension_pokemoves (
     PRIMARY KEY (pokemon_id, move, game_version)
 );
 
--- =========================
--- FACT POKEMON CHARACTERISTICS
--- =========================
 CREATE TABLE IF NOT EXISTS dimension_pokecharac (
     pokemon_id SMALLINT,
     base_xp SMALLINT,
@@ -51,7 +36,6 @@ CREATE TABLE IF NOT EXISTS dimension_pokecharac (
     abilities TEXT,
     PRIMARY KEY (pokemon_id, abilities)
 );
-
 
 CREATE TABLE IF NOT EXISTS dimension_pokeegg (
     pokemon_id SMALLINT,
@@ -65,10 +49,6 @@ CREATE TABLE IF NOT EXISTS dimension_pokeegg (
     egg TEXT,
     PRIMARY KEY (pokemon_id, egg)
 );
-
--- =========================
--- FACT POKEMON SPRITES
--- =========================
 
 CREATE TABLE IF NOT EXISTS dimension_pokesprites (
     pokemon_id SMALLINT PRIMARY KEY,

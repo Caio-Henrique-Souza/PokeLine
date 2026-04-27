@@ -4,8 +4,6 @@ from src.transform.bronze import criar_dpokegen,criar_dpokecharac, criar_dpokeeg
 from src.transform.silver import transformar_dpokegen,transformar_dpokecharac, transformar_dpokeegg, transformar_dpokemon, transformar_dpokemoves, transformar_dpokestats,transformar_dpoketype, transformar_dpokesprites
 from src.load.load import get_engine,carregar_pokegen,carregar_pokemoves, carregar_pokecharac,carregar_pokeegg,carregar_pokemon,carregar_pokestats,carregar_poketype, criar_tabelas, carregar_pokesprite
 def run_pipeline(extract=True):
-    print("⏳ Aguardando 10 segundos para o banco de dados inicializar...")
-    time.sleep(10)
     engine = get_engine()
     print("🚀 --- INICIANDO PIPELINE ---")
     

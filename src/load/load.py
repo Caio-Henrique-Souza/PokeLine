@@ -11,8 +11,6 @@ HOST = os.getenv("POSTGRES_HOST")
 PORT = os.getenv("POSTGRES_PORT")
 DB = os.getenv("POSTGRES_DB")
 
-
-# 🔧 conexão única
 def get_engine():
     return create_engine(
         f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}",
@@ -20,8 +18,6 @@ def get_engine():
         max_overflow=10
     )
 
-
-# 🧱 criar tabelas
 def criar_tabelas(engine):
     print("🧱 Criando tabelas no banco...")
 
@@ -33,8 +29,6 @@ def criar_tabelas(engine):
 
     print("✅ Tabelas criadas/verificadas com sucesso")
 
-
-# 🔥 função genérica de carga
 def carregar_csv_para_banco(caminho_csv, nome_tabela, engine):
     
     print(f"📥 Carregando {nome_tabela}...")
@@ -54,16 +48,12 @@ def carregar_csv_para_banco(caminho_csv, nome_tabela, engine):
 
     print(f"🔥 {nome_tabela}: {len(df)} linhas carregadas")
 
-
-# 🧩 funções específicas (agora simples e limpas)
-
 def carregar_pokemon(engine):
     carregar_csv_para_banco(
         "data/refined/dpokemon_refined.csv",
         "dimension_pokemon",
         engine
     )
-
 
 def carregar_pokecharac(engine):
     carregar_csv_para_banco(
@@ -72,14 +62,12 @@ def carregar_pokecharac(engine):
         engine
     )
 
-
 def carregar_pokeegg(engine):
     carregar_csv_para_banco(
         "data/refined/dpokeegg_refined.csv",
         "dimension_pokeegg",
         engine
     )
-
 
 def carregar_pokemoves(engine):
     carregar_csv_para_banco(
@@ -88,14 +76,12 @@ def carregar_pokemoves(engine):
         engine
     )
 
-
 def carregar_pokestats(engine):
     carregar_csv_para_banco(
         "data/refined/dpokestats_refined.csv",
         "dimension_pokestats",
         engine
     )
-
 
 def carregar_poketype(engine):
     carregar_csv_para_banco(

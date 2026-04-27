@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # 1. Banco de Dados para os Metadados do Airflow
+  airflow_db:
+    image: postgres:15
+    container_name: airflow_db_postgres
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 2. Banco de Dados para os Dados do seu Projeto (Pokeline)
+  postgres_dest:
+    image: postgres:15
+    container_name: postgres_pokeline
+    environment:
+      - POSTGRES_USER=user_poke
+      - POSTGRES_PASSWORD=password_poke
+      - POSTGRES_DB=db_pokemon
+    ports:
+      - "5433:5432" # Acesso externo via porta 5433
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+
+  # 3. O Airflow (Orquestrador)
+  airflow:
+    image: apache/airflow:2.7.0-python3.9
+    container_name: airflow_pokeline
+    # Comando para inicializar o banco, criar usuário e subir os serviços
+    command: bash -c "airflow db init && airflow users create --username admin --firstname admin --lastname admin --role Admin --email admin@example.com --password admin && (airflow webserver & airflow scheduler)"
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@airflow_db/airflow
+      - PYTHONPATH=/opt/airflow
+    volumes:
+      - .:/opt/airflow
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+    ports:
+      - "8080:8080"
+    depends_on:
+      airflow_db:
+        condition: service_healthy
+      postgres_dest:
+        condition: service_started
